@@ -1,7 +1,6 @@
 package com.pedro.simplify.infrastructure.repositories;
 
 import com.pedro.simplify.infrastructure.entities.Task;
-import org.springframework.beans.PropertyValues;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
