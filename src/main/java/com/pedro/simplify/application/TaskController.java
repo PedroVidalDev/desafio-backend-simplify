@@ -1,6 +1,7 @@
 package com.pedro.simplify.application;
 
 import com.pedro.simplify.application.dto.TaskInputDTO;
+import com.pedro.simplify.application.dto.TaskInputUpdateDTO;
 import com.pedro.simplify.application.dto.TaskOutputDTO;
 import com.pedro.simplify.infrastructure.entities.Task;
 import com.pedro.simplify.infrastructure.repositories.TaskRepository;
@@ -10,6 +11,8 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -22,10 +25,14 @@ public class TaskController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity createTask(@RequestBody TaskInputDTO data){
-        repository.save(new Task(data));
+    public ResponseEntity createTask(@RequestBody TaskInputDTO data, UriComponentsBuilder uriBuild){
+        Task task = new Task(data);
 
-        return ResponseEntity.ok().build();
+        repository.save(task);
+
+        var uri = uriBuild.path("/tasks/{id}").buildAndExpand(task.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new TaskOutputDTO(task));
     }
 
     @GetMapping
@@ -48,5 +55,15 @@ public class TaskController {
         repository.deleteById(Long.parseLong(id));
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity updateTask(@PathVariable String id, @RequestBody TaskInputUpdateDTO data){
+        Task task = repository.findById(Long.parseLong(id)).get();
+
+        task.update(data);
+
+        return ResponseEntity.ok(task);
     }
 }
