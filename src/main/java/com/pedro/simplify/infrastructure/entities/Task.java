@@ -19,8 +19,8 @@ public class Task {
 
     private String name;
     private String description;
-    private String realized;
-    private String priority;
+    private boolean realized;
+    private int priority;
 
     public Task(TaskInputDTO dto){
         this.name = dto.name();
