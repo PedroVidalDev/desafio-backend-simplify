@@ -1,6 +1,7 @@
 package com.pedro.simplify.infrastructure.entities;
 
 import com.pedro.simplify.application.dto.TaskInputDTO;
+import com.pedro.simplify.application.dto.TaskInputUpdateDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -27,5 +28,11 @@ public class Task {
         this.description = dto.description();
         this.realized = dto.realized();
         this.priority = dto.priority();
+    }
+
+    public void update(TaskInputUpdateDTO data) {
+        this.description = data.description();
+        this.realized = data.realized();
+        this.priority = data.priority();
     }
 }
