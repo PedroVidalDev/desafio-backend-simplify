@@ -7,15 +7,12 @@ import com.pedro.simplify.domain.TaskService;
 import com.pedro.simplify.infrastructure.entities.Task;
 import com.pedro.simplify.infrastructure.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
-import lombok.Getter;
-import org.apache.coyote.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -29,7 +26,7 @@ public class TaskController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity createTask(@RequestBody TaskInputDTO data, UriComponentsBuilder uriBuild){
+    public ResponseEntity createTask(@RequestBody @Valid TaskInputDTO data, UriComponentsBuilder uriBuild){
 
         var task = service.createNewTaskVerify(data);
 
@@ -62,7 +59,7 @@ public class TaskController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity updateTask(@PathVariable String id, @RequestBody TaskInputUpdateDTO data){
+    public ResponseEntity updateTask(@PathVariable String id, @RequestBody @Valid TaskInputUpdateDTO data){
         Task task = repository.findById(Long.parseLong(id)).get();
 
         task.update(data);
