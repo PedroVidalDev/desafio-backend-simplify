@@ -1,4 +1,7 @@
 package com.pedro.simplify.infrastructure.repositories;
 
-public interface TaskRepository {
+import com.pedro.simplify.infrastructure.entities.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TaskRepository extends JpaRepository<Task, Long> {
 }
