@@ -9,6 +9,7 @@ import com.pedro.simplify.infrastructure.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -65,5 +66,19 @@ public class TaskController {
         task.update(data);
 
         return ResponseEntity.ok(task);
+    }
+
+    @GetMapping("/byPriority/{priority}")
+    public ResponseEntity getByPriority(@PathVariable String priority){
+        var tasks = repository.findAllByPriority(Integer.parseInt(priority)).stream().map(TaskOutputDTO::new).toList();
+
+        return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/byRealized/{realized}")
+    public ResponseEntity getByRealized(@PathVariable String realized){
+        var tasks = repository.findAllByRealized(Boolean.parseBoolean(realized)).stream().map(TaskOutputDTO::new).toList();
+
+        return ResponseEntity.ok(tasks);
     }
 }
