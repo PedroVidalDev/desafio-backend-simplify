@@ -1,6 +1,7 @@
 # <p align="center"> Desafio Backend Simplify </p>
 ## Objetivo
 O objetivo do repositório é treinar o framework Spring, resolvendo um desafio de vaga backend e aprimorando minhas habilidades como programador.
+Link do desafio: https://github.com/simplify-tec/desafio-junior-backend-simplify
 
 ## Tecnologias Utilizadas
 - Spring Boot
